@@ -2,28 +2,34 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 export default function App4() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     getData();
   }, []);
 
   function getData() {
-    const myData = axios
-      .get(`https://jsonplaceholder.typicode.com/posts`)
+       axios.get(`https://jsonplaceholder.typicode.com/posts`)
 
       .then((result) => {
-        const myData = result.data;
-
-        //console.log(myData);
-
-        setData(myData);
-      });
+        setData(result.data);
+      })
   }
 
   //console.log(data);
 
-  return <div>Data Display</div>
-
-
+  return (
+    <>
+      <div>Data Display</div>
+    
+      {data.map((item)=>{
+        return (
+          <div key={item.id}>
+            <h2>{item.title}</h2>
+            <p>{item.body}</p>
+          </div>
+        )
+      })}
+    </>
+  )
 }
